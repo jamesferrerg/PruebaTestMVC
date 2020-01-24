@@ -1,0 +1,41 @@
+﻿@using PruebaTest.Models
+@model List<UsuarioCLS>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink("Agregar", "Add", "Usuario", null, new { @class="btn btn-primary"})
+
+<div>
+    <h3>Lista de usuarios - Prueba Tecnica</h3>
+
+    <table class="table col-md-6">
+        <thead>
+            <tr>
+                <td>Nombres</td>
+                <td>Apellidos</td>
+                <td>Email</td>
+                <td>Celular</td>
+                <td>Telefono</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.nombre</td>
+                    <td>@item.apellido</td>
+                    <td>@item.correo</td>
+                    <td>@item.celular</td>
+                    <td>@item.telefono</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
