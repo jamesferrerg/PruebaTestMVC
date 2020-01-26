@@ -12,26 +12,32 @@
 <div>
     <h3>Lista de usuarios - Prueba Tecnica</h3>
 
-    <table class="table col-md-6">
+    <table class="table col-md-2">
         <thead>
             <tr>
+                <td>Id de usuario</td>
                 <td>Nombres</td>
                 <td>Apellidos</td>
                 <td>Email</td>
                 <td>Celular</td>
                 <td>Telefono</td>
+                <td>Operaciones</td>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-
+                    <td>@item.idUsuario</td>
                     <td>@item.nombre</td>
                     <td>@item.apellido</td>
                     <td>@item.correo</td>
                     <td>@item.celular</td>
                     <td>@item.telefono</td>
+                    <td>
+                        @Html.ActionLink(" ", "Editar", "Usuario", new { id = @item.idUsuario }, new { @class = "fas fa-user-edit btn btn-primary" })
+                        @Html.ActionLink(" ", "Eliminar", "Usuario", new { id = @item.idUsuario }, new { @class = "far fa-trash-alt btn btn-danger", @onclick="eliminar()" })
+                    </td>
 
                 </tr>
             }
@@ -39,3 +45,15 @@
     </table>
 </div>
 
+<script>
+
+    //Se definio una funcion a traves del evento onclick en el html.actionlink
+    function eliminar() {
+
+        if (confirm("¿Desea eliminar el registro?") == 1) {
+            alert("Se elimino correctamente");
+        } else {
+            event.preventDefault();
+        }
+    }
+</script>

@@ -1,0 +1,36 @@
+﻿@using PruebaTest.Models
+@model MensajeCLS
+@{
+    ViewBag.Title = "Agregar";
+
+    List<SelectListItem> listarUsuarios = (List<SelectListItem>)ViewBag.listarUsuarios;
+}
+
+<h2>Agregar</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Agregar", "Mensaje", FormMethod.Post))
+        {
+        <div>
+            @Html.Label("Mensaje")
+            @Html.TextArea("mensaje", null, new { @class="form-control", @placeholder="Escriba su mensaje"})
+            @Html.ValidationMessage("mensaje", new { @class="text-danger"})
+        </div>
+        <div>
+            @Html.Label("Fecha de publicación")
+            @Html.TextBox("fechaPublicacion", null, new { @class="form-control", @type="date"})
+            @Html.ValidationMessage("fechaPublicacion", new { @class="text-danger"})
+        </div>
+        <div>
+            @Html.Label("Usuario que publicara")
+            @Html.DropDownList("idUsuarioM", listarUsuarios, null, new { @class = "form-control" })
+            @Html.ValidationMessage("idUsuarioM", new { @class = "text-danger" })
+        </div>
+        <br />
+        <div style="margin:auto">
+            <input type="submit" class="btn btn-success" value="Guardar"/>
+        </div>
+        }
+    </div>
+</div>

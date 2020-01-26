@@ -1,0 +1,79 @@
+﻿@using PruebaTest.Models
+@model List<MensajeCLS>
+
+@{
+    ViewBag.Title = "Index";
+
+    //List<SelectListItem> listarUsuarios = (List<SelectListItem>)ViewBag.listarUsuarios;
+}
+
+<h2>Index</h2>
+
+@Html.ActionLink(" ", "Agregar", "Mensaje", new { @class = "fas fa-user-plus fa-2x btn btn-primary" })
+
+<br />
+<br />
+<div class="row">
+    <table class="table table-bordered table-hover">
+        <thead class="text-center">
+            <tr>
+                <td>Id del Mensaje</td>
+                <td>Mensaje</td>
+                <td>Fecha de publicación</td>
+                <td>Usuario</td>
+                <td>Operaciones</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">@item.idMensaje</td>
+                    <td>@item.mensaje</td>
+                    <td class="text-center">@item.fechaPublicacion.ToString("dd/MM/yyyy")</td>
+                    <td class="text-center">@item.nombreU</td>
+                    <td>
+                        @Html.ActionLink(" ", "Editar", "Mensaje", new { id = @item.idMensaje }, new { @class = "fas fa-user-edit btn btn-primary" })
+                        @*@Html.ActionLink(" ", "Eliminar", "Mensaje", new { id = @item.idMensaje }, new { @class = "far fa-trash-alt btn btn-danger" })*@
+
+                        <!-- Button trigger modal -->
+                        <button type="button" onclick="mostrarPopup(@item.idMensaje)" class="far fa-trash-alt btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @using(Html.BeginForm("Eliminar", "Mensaje", FormMethod.Post, new { @id = "frmEliminar" }))
+    {
+        @Html.Hidden("idMensaje")
+    }
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-body">
+                ¿Esta seguro de eliminar el mensaje?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" onclick="Eliminar()" class="btn btn-danger">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function mostrarPopup(idMensaje) {
+        document.getElementById("idMensaje").value = idMensaje;
+    }
+    function Eliminar() {
+        var frmEliminando = document.getElementById("frmEliminar");
+        frmEliminando.submit();
+    }
+</script>

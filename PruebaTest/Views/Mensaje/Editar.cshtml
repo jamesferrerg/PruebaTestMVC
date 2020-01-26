@@ -1,0 +1,41 @@
+﻿@using PruebaTest.Models
+@model MensajeCLS
+@{
+    ViewBag.Title = "Editar";
+    List<SelectListItem> listarUsuarios = (List<SelectListItem>)ViewBag.listarUsuarios;
+}
+
+<h2>Editar</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Editar", "Mensaje", FormMethod.Post))
+        {
+            //Para ocultar un campo debe ubicarse dentro de la etiqueta el codigo(style="display:none")
+            <div style="display:none">
+                @Html.Label("Id del mensaje")
+                @Html.TextBox("idMensaje", null, new { @class="form-control", @readonly=true})
+            </div>
+            <div>
+                @Html.Label("Mensase publicado")
+                @Html.TextArea("mensaje", null, new { @class="form-control"})
+                @Html.ValidationMessage("mensaje", new { @class="text-danger"})
+            </div>
+            <div>
+                @Html.Label("Fecha de la publicación")
+                @Html.EditorFor(vr => vr.fechaPublicacion, null, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessage("fechaPublicacion", new { @class="text-danger"})
+            </div>
+            <div>
+                @Html.Label("Usuario que realizo la publicación")
+                @Html.DropDownList("idUsuarioM", listarUsuarios, null, new { @class="form-control"})
+                @Html.ValidationMessage("idUsuarioM", new { @class="text-danger"})
+            </div>
+            <br />
+            <div style="margin:auto">
+                @Html.ActionLink("Regresar", "Index", "Mensaje", new { @class="btn btn-secondary"})
+                <input type="submit" class="btn btn-success" value="Guardar"/>
+            </div>
+        }
+    </div>
+</div>

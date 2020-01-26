@@ -1,0 +1,64 @@
+﻿@using PruebaTest.Models
+@model UsuarioCLS
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Editar", "Usuario", FormMethod.Post, new { @id="frmEditar"}))
+        {
+            <div>
+                @Html.TextBox("idUsuario", null, new { @class = "form-control", @readonly=true })
+            </div>
+            <div>
+                @Html.Label("Nombres")
+                @Html.TextBox("nombre", null, new { @class = "form-control" })
+                @Html.ValidationMessage("nombre", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.Label("Apellidos")
+                @Html.TextBox("apellido", null, new { @class = "form-control" })
+                @Html.ValidationMessage("apellido", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.Label("Email")
+                @Html.TextBox("correo", null, new { @class = "form-control", @type = "email" })
+                @Html.ValidationMessage("correo", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.Label("Celular")
+                @Html.TextBox("celular", null, new { @class = "form-control", @type = "number" })
+                @Html.ValidationMessage("celular", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.Label("Telefono")
+                @Html.TextBox("telefono", null, new { @class = "form-control", @type = "number" })
+            </div>
+            <br />
+            <div style="margin:auto">
+                @Html.ActionLink("Regresar", "Index", "Usuario", null, new { @class = "btn btn-secondary" })
+                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    //Se asigna un id llamado frmEditar en el beginform para identificar el formulario
+    //Con el getElementById me permite obtener todo el objeto haciendo una busqueda por su id
+    var frmEditando = document.getElementById("frmEditar");
+    //Cuando se realize o de click en el boton submit de guardar se pueda activar toda la funcion
+    frmEditando.onsubmit = function (e) {
+        //Luego de hacer click y evitar guardar, se usa preventDefault
+        e.preventDefault();
+        //Se abre una ventana de confirmacion con confirm y con un mensaje, se iguala a 1 sabiendo que se
+        //guardara y 0 si presiona o desea cancelar
+        if (confirm("¿Desea guardar los cambios?") == 1) {
+            frmEditando.submit();
+        }
+    }
+</script>
+

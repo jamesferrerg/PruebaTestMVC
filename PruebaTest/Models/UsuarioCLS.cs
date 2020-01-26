@@ -8,6 +8,8 @@ namespace PruebaTest.Models
 {
     public class UsuarioCLS
     {
+        public int idUsuario { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage ="Longitud maxima de 100 caracteres")]
         public string nombre { get; set; }

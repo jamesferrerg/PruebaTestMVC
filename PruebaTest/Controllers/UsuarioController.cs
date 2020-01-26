@@ -21,6 +21,7 @@ namespace PruebaTest.Controllers
                                      where item.Habilitado == 1
                                      select new UsuarioCLS
                                      {
+                                         idUsuario=item.IdUsuario,
                                          nombre = item.Nombre,
                                          apellido = item.Apellido,
                                          correo = item.Email,
@@ -65,6 +66,64 @@ namespace PruebaTest.Controllers
                     bd.SaveChanges();
                 }
             }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Editar(int id)
+        {
+            //int sab = id;
+            UsuarioCLS oUsuarioCls = new UsuarioCLS();
+            using(var bd = new BDPruebaTecnicaEntities())
+            {
+                Usuarios oUsuario = bd.Usuarios.Where(vr => vr.IdUsuario.Equals(id)).First();
+
+                oUsuarioCls.idUsuario = oUsuario.IdUsuario;
+                oUsuarioCls.nombre = oUsuario.Nombre;
+                oUsuarioCls.apellido = oUsuario.Apellido;
+                oUsuarioCls.correo = oUsuario.Email;
+                oUsuarioCls.celular = (long)oUsuario.Celular;
+                oUsuarioCls.telefono = (int)oUsuario.Telefono;
+            }
+
+            return View(oUsuarioCls);
+        }
+
+        [HttpPost]
+        public ActionResult Editar(UsuarioCLS oUsuarioCls)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(oUsuarioCls);
+            }
+            else
+            {
+                int idUsu = oUsuarioCls.idUsuario;
+                using (var bd = new BDPruebaTecnicaEntities())
+                {
+                    Usuarios oUsuario = bd.Usuarios.Where(vr => vr.IdUsuario.Equals(idUsu)).First();
+                    oUsuario.Nombre = oUsuarioCls.nombre;
+                    oUsuario.Apellido = oUsuarioCls.apellido;
+                    oUsuario.Email = oUsuarioCls.correo;
+                    oUsuario.Celular = oUsuarioCls.celular;
+                    oUsuario.Telefono = oUsuarioCls.telefono;
+                    bd.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Eliminar(int id)
+        {
+            using(var bd=new BDPruebaTecnicaEntities())
+            {
+                Usuarios oUsuario = bd.Usuarios.Where(vr => vr.IdUsuario.Equals(id)).First();
+                oUsuario.Habilitado = 0;
+                bd.SaveChanges();
+
+            }
+
 
             return RedirectToAction("Index");
         }
